@@ -1,0 +1,25 @@
+Zadanie dotyczy tablicy mieszającej w kambinacji wariantów. 
+Poniżej znajduje sięgłówne zadanie (identyczne) dla wszystkich. 
+Dalej warianty oznaczone jako W11,W12, ... W21, W22, itd. 
+Na końcu lista osób z przypisanymi wariantami realizacji.
+
+Zadanie:
+Przedmiotem analizy jest tablica mieszająca: tablica przechowuje rekordy zawierające napisy.
+Długość tablicy jest ograniczona arbitralnie przez pewną stałą  K. 
+Dla danego napisu  s  obliczamy  k=M(s)  iumieszczamy strukturę reprezentującą napis w tablicy mieszającej: H[k].
+W przypadku kolizji funkcji mieszającej   (H[k]   zajęte)   reprezentujące   napis  s  struktury   danych   zapisywane   są
+w   sposób alternatywny   zobacz   warianty).  
+Przedmiotem   implementacji   powinno   być:   dodanie   i   usunięcieelementów w H[]. 
+Wybór funkcji mieszającej M(s) do decyzji projektanta - ale patrz wariant 3.
+
+W14
+W przypadku kolizji obliczamy nową lokalizację np. tak: k2=M(s,k1) ... i tak do skutku.
+
+W22
+Testy  przeprowadzić   dla:   sztucznie   wygenerowanych   słów,   generator   ma   posługiwać   się   tablicą
+prawdopodobieństw  wystąpienia  danej  litery  na  początku  slowa  (początek  słowa)  
+oraz  litery popoprzedzającej literze, (spacja, kropka, przecinek, itp. traktowane są jako litera specjalna "koniec słowa").
+Prawdopodobieństwa należy uzyskać z próbki tekstu polskiego
+
+W31
+Zastosować dwie znacząco różne funkcje mieszające. 
