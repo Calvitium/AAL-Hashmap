@@ -2,17 +2,16 @@
 #include <string>
 #include "HashMap/HashMap.h"
 #include "HashMap/HashMap.cpp"
-#include "WordGenerator/SampleCollector.h"
-#include "WordGenerator/ProbabilityTable.h"
+#include "WordGenerator/WordGenerator.h"
 
 int main() {
     setlocale( LC_ALL, "C.UTF-8" );
-    SampleCollector sample;
+    WordGenerator sample;
     sample.collectSample();
-    sample.firstLetter.show();
     sample.calculateProbabilities();
-    sample.afterOO.show();
-    ProbabilityTable prob;
-    wcout<<"¿ó³æ";
+    sample.generateDistributions();
+    sample.firstLetter.show();
+    for(int i = 0; i < 100; i++)
+        wcout<<sample.generateRandomWord()<<endl;
     return 0;
 }

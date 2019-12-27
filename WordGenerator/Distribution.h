@@ -1,5 +1,5 @@
 //
-// Created by mateusz on 17.11.19.
+// Created by mateusz on 27.12.19.
 //
 
 #ifndef HASHMAP_DISTRIBUTION_H
@@ -8,20 +8,30 @@
 
 #include <utility>
 #include <iostream>
-#include <vector>
+#include <list>
+#include <random>
 
 class Distribution {
-    friend class ProbabilityTable;
-    wchar_t letter;
-    std::vector<std::pair<double, wchar_t>> cumulativeDistribution;
+    friend class WordGenerator;
+
+private:
+    wchar_t letter{};
+    std::list<std::pair<wchar_t , double >*> cumulativeDistribution;
 
 public:
-    explicit Distribution(wchar_t letter) {
-        this->letter = letter;
-        cumulativeDistribution.resize(33);
-    }
-    Distribution(){cumulativeDistribution.resize(32);}
+    Distribution() = default;
 
+    explicit Distribution(wchar_t letter);
+
+    double &operator[](wchar_t letter);
+
+    void setLetter(wchar_t letter);
+
+    wchar_t getLetter();
+
+    void show();
+
+    wchar_t getRandom();
 };
 
 
