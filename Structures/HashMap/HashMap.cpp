@@ -1,5 +1,6 @@
 //
-// Created by mateusz on 01.11.19.
+// Created by Mateusz Marciniewicz 293150
+// Task: W14 + W22 + W32
 //
 
 #include <iostream>
@@ -80,13 +81,13 @@ int HashMap<KeyType, ValueType>::convertKey(Key key) {
 }
 
 template<typename KeyType, typename ValueType>
-int HashMap<KeyType, ValueType>::hash1(int k) {
-    return k % capacity;
+int HashMap<KeyType, ValueType>::hash1(int convertedKey) {
+    return convertedKey % capacity;
 }
 
 template<typename KeyType, typename ValueType>
-int HashMap<KeyType, ValueType>::hash2(int k) {
-    return 1 + k % (capacity - 2);
+int HashMap<KeyType, ValueType>::hash2(int convertedKey) {
+    return 1 + convertedKey % (capacity - 2);
 }
 
 template<typename KeyType, typename ValueType>
@@ -106,20 +107,9 @@ ValueType& HashMap<KeyType, ValueType>::operator[](Key key) {
 }
 
 template<typename KeyType, typename ValueType>
-void HashMap<KeyType, ValueType>::reallocate() {
-    wcout<<"Map resized from "<<capacity<<" to "<<capacity*2<<endl;
-    HashMap<Key, Value> biggerMap(capacity*2);
-    for(int i = 0; i<capacity; i++)
-        if(buffer[i] != nullptr)
-            biggerMap[buffer[i]->first] = buffer[i]->second;
-    *this = std::move(biggerMap);
-}
-
-template<typename KeyType, typename ValueType>
 int HashMap<KeyType, ValueType>::findIndex(Key key) {
     int converted = convertKey(key);
-    int attempt, index;
-    attempt = 0;
+    int attempt = 0, index;
     do{
         if(attempt > capacity * MAX_LOAD_FACTOR)
             reallocate();
@@ -129,6 +119,15 @@ int HashMap<KeyType, ValueType>::findIndex(Key key) {
         ++attempt;
     }while(buffer[index]->first != key);
     return index;
+}
+
+template<typename KeyType, typename ValueType>
+void HashMap<KeyType, ValueType>::reallocate() {
+    HashMap<Key, Value> biggerMap(capacity*2);
+    for(int i = 0; i<capacity; i++)
+        if(buffer[i] != nullptr)
+            biggerMap[buffer[i]->first] = buffer[i]->second;
+    *this = std::move(biggerMap);
 }
 
 

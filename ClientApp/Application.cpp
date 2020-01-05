@@ -1,16 +1,22 @@
 //
-// Created by mateusz on 02.01.20.
+// Created by Mateusz Marciniewicz 293150
+// Task: W14 + W22 + W32
 //
 
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+#include <climits>
+#include <zconf.h>
 #include "Application.h"
 #include "../Structures/HashMap/HashMap.cpp"
 using namespace std;
-
 WordGenerator Application :: generator;
-string Application :: filePath = "/home/mateusz/Pulpit/PW Informatyka/Sem5/AAL/Hashmap/sample.txt";
+string Application :: filePath = "../sample.txt";
+
+double T(int n){
+    return 1.6*n + 8;
+}
 
 void Application::start() {
     bool quit = false;
@@ -65,29 +71,44 @@ void Application::startMeasurement() {
     int problemSizes[50] = {0};
     wcout<<"Enter sizes of problems to measure. Put 0 to break the sequence (ex. 10 100 20000 400000 0): ";
     int temp;
+    int problemsCount = 0;
     for (int &problemSize : problemSizes) {
+        problemsCount++;
         cin>>temp;
         if(temp == 0) break;
         problemSize = temp;
     }
 
-    wcout<<"================================"<<endl;
-    wcout<<"|    n    |  t(n) [ms]  | q(n) |"<<endl;
-    wcout<<"================================"<<endl;
+    int nMedian = problemSizes[problemsCount/2 - 1];
+    HashMap<int, wstring> median(nMedian);
+    auto medianStart = chrono::high_resolution_clock::now();
+    for(int i = 0; i<nMedian; i++)
+        median[i] = generator.generateRandomWord();
+    auto medianStop = chrono::high_resolution_clock::now();
+    auto medianDuration = chrono::duration_cast<chrono::microseconds>(medianStop-medianStart);
+
+
+    wcout<<"===================================="<<endl;
+    wcout<<"|    n    |  t(n) [ms]  |   q(n)   |"<<endl;
+    wcout<<"===================================="<<endl;
 
 
     for(int i = 0; problemSizes[i] != 0; i++) {
         auto map = new HashMap<int, wstring>(problemSizes[i]);
-        auto start = std::chrono::high_resolution_clock::now();
+        auto start = chrono::high_resolution_clock::now();
         for(int j = 0; j < problemSizes[i]; j++)
             map->operator[](j) = generator.generateRandomWord();
-        auto stop = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-        wcout<<"|  "<<std::setw(6)<<problemSizes[i]<<" | "<<std::setw(11)<<duration.count()<<" |"<<" 1.0"<<"  |"<<endl;
+        auto stop = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+        wcout<<"|  "<<setw(6)<<problemSizes[i]<<" | "<<setw(11)<<duration.count()<<" |";
+        if(problemSizes[i] == nMedian)
+            wcout<<setw(8)<<(float)1<<"  |"<<endl;
+        else
+            wcout<<setw(8)<<duration.count()*T(nMedian)/(T(problemSizes[i])*medianDuration.count())<<"  |"<<endl;
         delete map;
     }
 
-    wcout<<"================================"<<endl;
+    wcout<<"===================================="<<endl;
 }
 
 void Application::createMap(string filePath) {
@@ -103,3 +124,5 @@ void Application::createMap(string filePath) {
     fclose(pFile);
     map.show();
 }
+
+

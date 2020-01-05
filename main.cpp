@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <climits>
+#include <zconf.h>
 #include "ClientApp/Application.h"
 #include "Structures/HashMap/HashMap.cpp"
 

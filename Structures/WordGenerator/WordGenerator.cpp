@@ -1,5 +1,6 @@
 //
-// Created by mateusz on 17.11.19.
+// Created by Mateusz Marciniewicz 293150
+// Task: W14 + W22 + W32
 //
 
 #include <iostream>

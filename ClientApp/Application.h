@@ -1,5 +1,6 @@
 //
-// Created by mateusz on 02.01.20.
+// Created by Mateusz Marciniewicz 293150
+// Task: W14 + W22 + W32
 //
 
 #ifndef HASHMAP_APPLICATION_H

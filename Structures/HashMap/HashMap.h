@@ -1,7 +1,7 @@
 //
-// Created by mateusz on 01.11.19.
+// Created by Mateusz Marciniewicz 293150
+// Task: W14 + W22 + W32
 //
-
 #ifndef HASHMAP_HASHMAP_H
 #define HASHMAP_HASHMAP_H
 
@@ -36,8 +36,8 @@ public:
 private:
     void reallocate();
     int convertKey(Key key);
-    int hash1(int k);
-    int hash2(int k);
+    int hash1(int convertedKey);
+    int hash2(int convertedKey);
     int hashKey(int key, int attempt);
     int findIndex(Key key);
 
